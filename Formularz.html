@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Formularz Testowy</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f4f4f4;
+  padding: 20px;
+}
+
+.container {
+  background: white;
+  padding: 20px;
+  max-width: 400px;
+  margin: auto;
+  border-radius: 10px;
+}
+
+input, select, button {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.success {
+  color: green;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Formularz zamówienia</h2>
+
+<form id="form">
+
+<input id="email" placeholder="Email">
+<div id="emailError" class="error"></div>
+
+<input id="name" placeholder="Imię">
+<div id="nameError" class="error"></div>
+
+<input id="quantity" type="number" placeholder="Ilość produktu" min="1">
+<div id="quantityError" class="error"></div>
+
+<select id="product">
+  <option value="">Wybierz produkt</option>
+  <option value="tv">Telewizor</option>
+  <option value="laptop">Laptop</option>
+</select>
+<div id="productError" class="error"></div>
+
+<button type="submit">Zamów</button>
+
+</form>
+
+<p id="result"></p>
+</div>
+
+<script>
+document.getElementById("form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  let email = document.getElementById("email").value;
+  let name = document.getElementById("name").value;
+  let quantity = document.getElementById("quantity").value;
+  let product = document.getElementById("product").value;
+
+  let valid = true;
+
+  // reset błędów
+  document.querySelectorAll(".error").forEach(el => el.innerText = "");
+
+  // EMAIL
+  if (!email.includes("@")) {
+    document.getElementById("emailError").innerText = "Niepoprawny email";
+    valid = false;
+  }
+
+  // NAME
+  if (name.trim() === "") {
+    document.getElementById("nameError").innerText = "Imię wymagane";
+    valid = false;
+  }
+
+  // QUANTITY
+  if (quantity <= 0 || quantity === "") {
+    document.getElementById("quantityError").innerText = "Podaj ilość > 0";
+    valid = false;
+  }
+
+  // PRODUCT
+  if (product === "") {
+    document.getElementById("productError").innerText = "Wybierz produkt";
+    valid = false;
+  }
+
+  // WYNIK
+  if (valid) {
+    document.getElementById("result").innerText = "Zamówienie przyjęte!";
+    document.getElementById("result").className = "success";
+  } else {
+    document.getElementById("result").innerText = "Popraw błędy!";
+    document.getElementById("result").className = "error";
+  }
+
+});
+</script>
+
+</body>
+</html>
